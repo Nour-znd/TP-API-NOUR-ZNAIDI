@@ -1,0 +1,476 @@
+{
+  "info": {
+    "name": "My Social Networks API",
+    "description": "Exemples des principales creations et des methodes GET, PATCH et DELETE. Les URLs de chaque service sont presentees dans les dossiers.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "userId",
+      "value": "ID_UTILISATEUR"
+    },
+    {
+      "key": "groupId",
+      "value": "ID_GROUPE"
+    },
+    {
+      "key": "eventId",
+      "value": "ID_EVENEMENT"
+    },
+    {
+      "key": "threadId",
+      "value": "ID_FIL"
+    },
+    {
+      "key": "messageId",
+      "value": "ID_MESSAGE"
+    },
+    {
+      "key": "albumId",
+      "value": "ID_ALBUM"
+    },
+    {
+      "key": "pollId",
+      "value": "ID_SONDAGE"
+    },
+    {
+      "key": "questionId",
+      "value": "ID_QUESTION"
+    },
+    {
+      "key": "optionId",
+      "value": "ID_OPTION"
+    },
+    {
+      "key": "ticketTypeId",
+      "value": "ID_TYPE_BILLET"
+    },
+    {
+      "key": "questionId",
+      "value": "ID_QUESTION"
+    },
+    {
+      "key": "optionId",
+      "value": "ID_OPTION"
+    }
+  ],
+  "item": [
+    {
+      "name": "CRUD utilisateur",
+      "description": "Exemple des methodes de lecture, modification et suppression. Les autres ressources suivent le meme modele CRUD sur leurs URLs.",
+      "item": [
+        {
+          "name": "Rechercher les utilisateurs - GET",
+          "request": {
+            "method": "GET",
+            "description": "Liste les utilisateurs; q permet une recherche simple.",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users?q=amina"
+            }
+          }
+        },
+        {
+          "name": "Modifier un utilisateur - PATCH",
+          "request": {
+            "method": "PATCH",
+            "description": "Met a jour les champs fournis.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bio\": \"Photographe amateur\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}"
+            }
+          }
+        },
+        {
+          "name": "Remplacer un utilisateur - PUT",
+          "request": {
+            "method": "PUT",
+            "description": "Remplace les champs modifiables de l utilisateur.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Amina\",\n  \"last_name\": \"Dupont\",\n  \"email\": \"amina@example.com\",\n  \"bio\": \"Photographe amateur\",\n  \"profile_photo\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}"
+            }
+          }
+        },
+        {
+          "name": "Supprimer un utilisateur - DELETE",
+          "request": {
+            "method": "DELETE",
+            "description": "Supprime l utilisateur indique.",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/{{userId}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base",
+      "description": "Etat du service et creation des ressources de base.",
+      "item": [
+        {
+          "name": "Creer un utilisateur",
+          "request": {
+            "method": "POST",
+            "description": "Email unique. Reponse : identifiant utilisateur.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Amina\",\n  \"last_name\": \"Dupont\",\n  \"email\": \"amina@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Creer un groupe",
+          "request": {
+            "method": "POST",
+            "description": "Le createur devient administrateur. Visibilite : public, private ou secret.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/groups"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"creator_id\": \"{{userId}}\",\n  \"name\": \"Club photo\",\n  \"description\": \"Sorties et partage de photos\",\n  \"visibility\": \"private\",\n  \"members_can_post\": true,\n  \"members_can_create_events\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Creer un evenement",
+          "request": {
+            "method": "POST",
+            "description": "Le createur est organisateur et participant. Les dates sont ISO 8601.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"creator_id\": \"{{userId}}\",\n  \"name\": \"Sortie photo\",\n  \"description\": \"Une journee de photo\",\n  \"start_at\": \"2026-12-05T09:00:00-01:00\",\n  \"end_at\": \"2026-12-05T17:00:00-01:00\",\n  \"location\": \"Praia\",\n  \"cover_photo\": \"https://example.com/event.jpg\",\n  \"visibility\": \"public\",\n  \"tickets_enabled\": true,\n  \"shopping_list_enabled\": true,\n  \"carpool_enabled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groupes et evenements",
+      "description": "Gestion des membres, participants et fils de discussion.",
+      "item": [
+        {
+          "name": "Creer le fil de l evenement",
+          "request": {
+            "method": "POST",
+            "description": "Un fil au maximum par evenement.",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/thread"
+            }
+          }
+        },
+        {
+          "name": "Publier un message",
+          "request": {
+            "method": "POST",
+            "description": "Publier dans le fil selon les droits du groupe ou la participation a l evenement.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/threads/{{threadId}}/messages"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"content\": \"A quelle heure se retrouve-t-on ?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Photos et sondages",
+      "description": "Albums, photos et reponses aux sondages.",
+      "item": [
+        {
+          "name": "Creer un album",
+          "request": {
+            "method": "POST",
+            "description": "Les albums sont associes a un evenement.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/albums"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Photos de la sortie\",\n  \"description\": \"Selection des participants\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Ajouter une photo",
+          "request": {
+            "method": "POST",
+            "description": "Photo referencee par URL, ajoutee par un participant.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/albums/{{albumId}}/photos"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"url\": \"https://example.com/photo.jpg\",\n  \"caption\": \"La sortie commence\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Creer un sondage",
+          "request": {
+            "method": "POST",
+            "description": "Reserve aux organisateurs. Chaque question propose au moins deux choix.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/polls"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizer_id\": \"{{userId}}\",\n  \"title\": \"Choisir le repas\",\n  \"questions\": [\n    {\n      \"text\": \"Quel repas ?\",\n      \"options\": [\n        \"Pique-nique\",\n        \"Restaurant\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Repondre au sondage",
+          "request": {
+            "method": "POST",
+            "description": "Un participant choisit une seule option pour chaque question. Utiliser les identifiants retournes par le sondage.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/polls/{{pollId}}/responses"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"answers\": {\n    \"{{questionId}}\": \"{{optionId}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fonctions evenement",
+      "description": "Billetterie, shopping list et covoiturage.",
+      "item": [
+        {
+          "name": "Creer un type de billet",
+          "request": {
+            "method": "POST",
+            "description": "Reserve a un organisateur. Le stock est limite.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/ticket-types"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizer_id\": \"{{userId}}\",\n  \"name\": \"Entree standard\",\n  \"amount\": 15,\n  \"quantity\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Acheter un billet",
+          "request": {
+            "method": "POST",
+            "description": "Une personne exterieure peut obtenir un billet. Le stock est mis a jour.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/tickets"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticket_type_id\": \"{{ticketTypeId}}\",\n  \"person\": {\n    \"first_name\": \"Amina\",\n    \"last_name\": \"Dupont\",\n    \"address\": \"12 rue des Fleurs, Praia\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Ajouter un article",
+          "request": {
+            "method": "POST",
+            "description": "Chaque nom d article est unique par evenement.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/shopping-list"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"name\": \"Jus de fruits\",\n  \"quantity\": 3,\n  \"arrival_time\": \"18:30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Proposer un trajet",
+          "request": {
+            "method": "POST",
+            "description": "L ecart maximal est indique en minutes.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/events/{{eventId}}/carpools"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"departure_place\": \"Centre-ville\",\n  \"departure_time\": \"17:30\",\n  \"proposed_price\": 5,\n  \"seats_available\": 3,\n  \"max_detour_minutes\": 30\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
