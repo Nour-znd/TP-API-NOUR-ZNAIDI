@@ -41,9 +41,3 @@ Les sous-ressources suivent les mêmes opérations CRUD (création, lecture, mod
 - Les billets sont limités par le stock du type; une personne ne peut acheter qu'un billet par événement. L'annulation remet le billet en stock.
 - Le nom d'un article de shopping list est unique par événement. Les trajets stockent l'écart maximal en minutes.
 - La billetterie, la shopping list et le covoiturage doivent être activés dans l'événement.
-
-## Limites
-
-Le stockage est en mémoire et revient à zéro à l'arrêt du serveur. Les identifiants `user_id` et `actor_id` servent à relier les données, mais il n'y a pas d'authentification. C'est une version de démonstration locale, pas une mise en production.
-
-Le dossier contient le code source et la collection Postman à importer. Aucun lien de publication Postman ou dépôt Git distant n'a été créé depuis les comptes de l'étudiant.
